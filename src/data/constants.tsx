@@ -14,7 +14,7 @@ export const CONTENT_SECTIONS: ContentSection[] = [
     ],
     highlight: "Độc lập dân tộc gắn liền với Chủ nghĩa xã hội",
     icon: Target,
-    pic: "src\\assets\\images\\N4.png",
+    pic: "/images/N4.png",
   },
   {
     id: 2,
@@ -27,7 +27,7 @@ export const CONTENT_SECTIONS: ContentSection[] = [
     ],
     highlight: "Dân biết, dân bàn, dân làm, dân kiểm tra",
     icon: Users,
-    pic: "src\\assets\\images\\image001-5363.jpg",
+    pic: "/images/image001-5363.jpg",
   },
   {
     id: 3,
@@ -40,7 +40,7 @@ export const CONTENT_SECTIONS: ContentSection[] = [
     ],
     highlight: "Đảng lãnh đạo, Nhà nước quản lý, Nhân dân làm chủ",
     icon: Landmark,
-    pic: "src\\assets\\images\\bac-ho.jpg",
+    pic: "/images/bac-ho.jpg",
   },
   {
     id: 4,
@@ -53,7 +53,7 @@ export const CONTENT_SECTIONS: ContentSection[] = [
     ],
     highlight: "Chống tự diễn biến, tự chuyển hóa",
     icon: ShieldAlert,
-    pic: "src\\assets\\images\\bac-ho2.jpg",
+    pic: "/images/bac-ho2.jpg",
   },
 ];
 
