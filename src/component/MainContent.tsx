@@ -1,6 +1,6 @@
-import React, { forwardRef } from 'react';
-import { CONTENT_SECTIONS } from '../data/constants';
-import { RevealOnScroll } from './RevealOnScroll';
+import React, { forwardRef } from "react";
+import { CONTENT_SECTIONS } from "../data/constants";
+import { RevealOnScroll } from "./RevealOnScroll";
 
 export const MainContent = forwardRef<HTMLElement>((props, ref) => {
   return (
@@ -27,7 +27,7 @@ export const MainContent = forwardRef<HTMLElement>((props, ref) => {
               <RevealOnScroll key={section.id}>
                 <div
                   className={`flex flex-col md:flex-row gap-12 items-center ${
-                    isEven ? '' : 'md:flex-row-reverse'
+                    isEven ? "" : "md:flex-row-reverse"
                   }`}
                 >
                   {/* Icon Side */}
@@ -35,10 +35,7 @@ export const MainContent = forwardRef<HTMLElement>((props, ref) => {
                     <div className="relative group perspective-1000">
                       <div className="absolute inset-0 bg-[#8B0000]/2 rounded-full blur-2xl opacity-50 group-hover:opacity-70 transition-opacity duration-500"></div>
                       <div className="relative bg-[#FFF7E6] p-10 rounded-2xl shadow-xl border border-[#D9A441]/40 dark:border-[#8B0000]/40 transition-all duration-300 transform group-hover:-translate-y-2">
-                        <Icon
-                          className="w-24 h-24 text-[#8B0000] transition-colors duration-300"
-                          strokeWidth={1.5}
-                        />
+                        <img src={section.pic} className="mt-4" />
                       </div>
                       <div className="absolute -bottom-4 -right-4 bg-[#D9A441] font-bold px-4 py-2 rounded-lg shadow-md text-sm transform transition-transform group-hover:scale-110 duration-300">
                         Mục {section.id}
@@ -68,7 +65,7 @@ export const MainContent = forwardRef<HTMLElement>((props, ref) => {
 
                     <div className="mt-8 inline-block bg-[#FFF7E6] px-6 py-4 rounded-xl border-l-4 border-[#8B0000] shadow-sm transition-colors duration-300">
                       <span className="font-semibold text-[#8B0000] ">
-                        Từ khóa:{' '}
+                        Từ khóa:{" "}
                       </span>
                       <span className="text-[#3E2B28]">
                         {section.highlight}

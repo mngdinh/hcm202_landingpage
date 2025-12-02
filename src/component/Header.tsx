@@ -1,11 +1,13 @@
 // src/components/Header.tsx
-import React, { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { RevealOnScroll } from './RevealOnScroll';
+import React, { useState, useEffect, useRef } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { RevealOnScroll } from "./RevealOnScroll";
 
 // Import ảnh (đặt trong public/images hoặc src/assets)
-import image1 from '../assets/images/image1.jpg';
-import image2 from '../assets/images/image2.jpg';
+import image1 from "../assets/images/image1.jpg";
+import image2 from "../assets/images/image2.jpg";
+import image3 from "../assets/images/image.jpg";
+import image4 from "../assets/images/bh.jpg";
 
 interface Slide {
   title: string;
@@ -32,14 +34,15 @@ const slides: Slide[] = [
   {
     title: "Con đường cách mạng Việt Nam",
     highlight: "là tất yếu lịch sử",
-    subtitle: "Chỉ có CNXH mới mang lại độc lập thực sự và hạnh phúc cho nhân dân",
-    bgImage: image1,
+    subtitle:
+      "Chỉ có CNXH mới mang lại độc lập thực sự và hạnh phúc cho nhân dân",
+    bgImage: image3,
   },
   {
     title: "Học tập và làm theo tư tưởng,",
     highlight: "đạo đức, phong cách Hồ Chí Minh",
     subtitle: "Xây dựng Đảng trong sạch vững mạnh, cán bộ đảng viên gương mẫu",
-    bgImage: image2,
+    bgImage: image4,
   },
 ];
 
@@ -53,7 +56,8 @@ export const Header: React.FC<HeaderProps> = ({ onScrollToContent }) => {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
-  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  const prevSlide = () =>
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
 
   useEffect(() => {
     if (!isPlaying) return;
@@ -68,21 +72,22 @@ export const Header: React.FC<HeaderProps> = ({ onScrollToContent }) => {
       onMouseLeave={() => setIsPlaying(true)}
     >
       {/* Slides */}
-      {slides.map((slide, index) => (
-        index !== currentSlide && (
-          <div
-            key={index}
-            className="absolute inset-0 opacity-0 pointer-events-none transition-opacity duration-1500"
-          >
-            {/* Background + overlay (không cần nội dung vì bị ẩn) */}
+      {slides.map(
+        (slide, index) =>
+          index !== currentSlide && (
             <div
-              className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105"
-              style={{ backgroundImage: `url(${slide.bgImage})` }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-br from-red-900/90 via-black/50 to-red-950/80" />
-          </div>
-        )
-      ))}
+              key={index}
+              className="absolute inset-0 opacity-0 pointer-events-none transition-opacity duration-1500"
+            >
+              {/* Background + overlay (không cần nội dung vì bị ẩn) */}
+              <div
+                className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105"
+                style={{ backgroundImage: `url(${slide.bgImage})` }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-br from-red-900/90 via-black/50 to-red-950/80" />
+            </div>
+          )
+      )}
 
       {/* Slide hiện tại - luôn render CUỐI để nằm TRÊN CÙNG */}
       {slides[currentSlide] && (
@@ -114,7 +119,9 @@ export const Header: React.FC<HeaderProps> = ({ onScrollToContent }) => {
                   <h1 className="text-xl md:text-6xl lg:text-6xl font-extrabold leading-tight">
                     {slides[currentSlide].title}
                     <br />
-                    <span className="text-yellow-400 drop-shadow-2xl">{slides[currentSlide].highlight}</span>
+                    <span className="text-yellow-400 drop-shadow-2xl">
+                      {slides[currentSlide].highlight}
+                    </span>
                   </h1>
 
                   <p className="text-lg md:text-xl lg:text-2xl text-yellow-100/90 font-medium max-w-4xl mx-auto md:mx-0 leading-relaxed">
@@ -157,8 +164,8 @@ export const Header: React.FC<HeaderProps> = ({ onScrollToContent }) => {
             onClick={() => setCurrentSlide(i)}
             className={`transition-all duration-500 ${
               i === currentSlide
-                ? 'w-16 h-4 bg-yellow-400 rounded-full shadow-lg'
-                : 'w-4 h-4 bg-white/50 rounded-full hover:bg-white/80'
+                ? "w-16 h-4 bg-yellow-400 rounded-full shadow-lg"
+                : "w-4 h-4 bg-white/50 rounded-full hover:bg-white/80"
             }`}
           />
         ))}

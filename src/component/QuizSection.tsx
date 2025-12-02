@@ -92,13 +92,8 @@ export const QuizSection: React.FC<QuizSectionProps> = ({
             <h2 className="text-4xl md:text-5xl font-bold mb-4 text-[#8B0000]">
               Trắc Nghiệm Flashcard
             </h2>
-            <p className="text-[#3E2B28] text-lg">
-              Chọn đáp án → Nhấn <RotateCw className="inline w-5 h-5 mx-1" /> để
-              xem giải thích
-            </p>
           </div>
         </RevealOnScroll>
-
         {/* Progress Bar */}
         <div className="mb-10">
           <div className="flex justify-between text-sm text-[#3E2B28] mb-2">
@@ -114,7 +109,6 @@ export const QuizSection: React.FC<QuizSectionProps> = ({
             />
           </div>
         </div>
-
         {/* Kết quả nổi bật sau khi nộp bài */}
         {isSubmitted && (
           <div className="text-center mb-8 animate-in fade-in slide-in-from-top duration-700">
@@ -136,31 +130,50 @@ export const QuizSection: React.FC<QuizSectionProps> = ({
                 </p>
               </div>
               <div className="text-6xl">
-                {currentQuestions.filter(
-                  (q) => quizState[q.id] === q.correctAnswer
-                ).length === currentQuestions.length ? (
-                  <span role="img" aria-label="perfect">
-                    Perfect
-                  </span>
-                ) : currentQuestions.filter(
+                {(() => {
+                  const correctCount = currentQuestions.filter(
                     (q) => quizState[q.id] === q.correctAnswer
-                  ).length >=
-                  currentQuestions.length * 0.7 ? (
-                  <span role="img" aria-label="great">
-                    Great
-                  </span>
-                ) : (
-                  <span role="img" aria-label="good">
-                    Good
-                  </span>
-                )}
+                  ).length;
+                  const total = currentQuestions.length;
+                  const ratio = (correctCount / total) * 100;
+
+                  if (ratio === 100) {
+                    return (
+                      <span role="img" aria-label="excellent">
+                        Excellent
+                      </span>
+                    );
+                  } else if (ratio >= 70) {
+                    return (
+                      <span role="img" aria-label="perfect">
+                        Perfect
+                      </span>
+                    );
+                  } else if (ratio >= 50) {
+                    return (
+                      <span role="img" aria-label="great">
+                        Great
+                      </span>
+                    );
+                  } else if (ratio >= 30) {
+                    return (
+                      <span role="img" aria-label="good">
+                        Good
+                      </span>
+                    );
+                  } else {
+                    return (
+                      <span role="img" aria-label="bad">
+                        Bad
+                      </span>
+                    );
+                  }
+                })()}
               </div>
             </div>
           </div>
         )}
-
         {/* Flashcard */}
-
         {/* Flashcard - ĐÃ FIX TRÀN CHỮ */}
         <RevealOnScroll delay={100}>
           <div className="relative w-full max-w-4xl mx-auto mb-12">
@@ -345,33 +358,24 @@ export const QuizSection: React.FC<QuizSectionProps> = ({
             </button>
           )}
         </div>
-
-        {/* Result (after submit) */}
+        {/* Result (after submit) */}{" "}
         {isSubmitted && (
           <div className="mt-16 text-center">
+            {" "}
             <div className="inline-block p-10 bg-white rounded-3xl shadow-2xl border-4 border-[#D9A441]">
+              {" "}
               <h3 className="text-4xl font-bold text-[#8B0000] mb-4">
-                Hoàn thành!
-              </h3>
-              <p className="text-6xl font-extrabold text-[#D9A441] mb-6">
-                {
-                  currentQuestions.filter(
-                    (q) => quizState[q.id] === q.correctAnswer
-                  ).length
-                }
-                <span className="text-4xl text-[#3E2B28]">
-                  {" "}
-                  / {currentQuestions.length}
-                </span>
-              </p>
+                {" "}
+                Hoàn thành!{" "}
+              </h3>{" "}
               <button
                 onClick={onReset}
                 className="inline-flex items-center gap-3 px-10 py-5 bg-[#8B0000] hover:bg-[#6E0000] text-white font-bold rounded-full text-lg transition-all hover:scale-105"
               >
-                <RefreshCw className="w-6 h-6" />
-                Làm lại từ đầu
-              </button>
-            </div>
+                {" "}
+                <RefreshCw className="w-6 h-6" /> Làm lại từ đầu{" "}
+              </button>{" "}
+            </div>{" "}
           </div>
         )}
       </div>

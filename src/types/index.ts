@@ -7,6 +7,7 @@ export interface ContentSection {
   points: string[];
   highlight: string;
   icon: LucideIcon;
+  pic: string;
 }
 
 export interface QuizQuestion {
