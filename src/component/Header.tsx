@@ -67,7 +67,7 @@ export const Header: React.FC<HeaderProps> = ({ onScrollToContent }) => {
 
   return (
     <header
-      className="relative h-screen min-h-[600px] overflow-hidden"
+      className="relative h-screen min-h-[480px] md:min-h-[600px] overflow-hidden"
       onMouseEnter={() => setIsPlaying(false)}
       onMouseLeave={() => setIsPlaying(true)}
     >
@@ -103,8 +103,8 @@ export const Header: React.FC<HeaderProps> = ({ onScrollToContent }) => {
           <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg ...%3E')] opacity-20" />
 
           {/* Content - chỉ hiện ở slide hiện tại */}
-          <div className="relative h-full flex items-center px-6 z-20">
-            <div className="max-w-6xl mx-auto md:text-left">
+          <div className="relative h-full flex items-center px-4 md:px-6 z-20">
+            <div className="max-w-6xl mx-auto text-center md:text-left">
               <RevealOnScroll delay={200}>
                 <div className="space-y-8">
                   {slides[currentSlide].badge && (
@@ -116,7 +116,7 @@ export const Header: React.FC<HeaderProps> = ({ onScrollToContent }) => {
                     </div>
                   )}
 
-                  <h1 className="text-xl md:text-6xl lg:text-6xl font-extrabold leading-tight">
+                  <h1 className="text-2xl sm:text-3xl md:text-6xl lg:text-6xl font-extrabold leading-tight">
                     {slides[currentSlide].title}
                     <br />
                     <span className="text-yellow-400 drop-shadow-2xl">
@@ -124,16 +124,17 @@ export const Header: React.FC<HeaderProps> = ({ onScrollToContent }) => {
                     </span>
                   </h1>
 
-                  <p className="text-lg md:text-xl lg:text-2xl text-yellow-100/90 font-medium max-w-4xl mx-auto md:mx-0 leading-relaxed">
+                  <p className="text-base md:text-xl lg:text-2xl text-yellow-100/90 font-medium max-w-4xl mx-auto md:mx-0 leading-relaxed">
                     {slides[currentSlide].subtitle}
                   </p>
 
                   <button
                     onClick={onScrollToContent}
-                    className="group mt-10 bg-yellow-500 hover:bg-yellow-400 text-red-900 font-bold text-lg px-10 py-5 rounded-xl shadow-2xl hover:shadow-yellow-500/60 transform hover:scale-105 transition-all duration-300 flex items-center gap-3 mx-auto md:mx-0"
+                    aria-label="Bắt đầu học tập ngay"
+                    className="group mt-8 bg-yellow-500 hover:bg-yellow-400 text-red-900 font-bold text-base md:text-lg px-6 md:px-10 py-4 md:py-5 rounded-xl shadow-2xl hover:shadow-yellow-500/60 transform hover:scale-105 transition-all duration-300 flex items-center gap-3 mx-auto md:mx-0 w-full md:w-auto justify-center"
                   >
-                    Bắt đầu học tập ngay
-                    <ChevronRight className="w-7 h-7 group-hover:translate-x-2 transition-transform" />
+                    <span className="pointer-events-none">Bắt đầu học tập ngay</span>
+                    <ChevronRight className="hidden md:inline-block w-6 h-6 group-hover:translate-x-2 transition-transform" />
                   </button>
                 </div>
               </RevealOnScroll>
@@ -145,27 +146,27 @@ export const Header: React.FC<HeaderProps> = ({ onScrollToContent }) => {
       {/* Navigation */}
       <button
         onClick={prevSlide}
-        className="absolute left-6 top-1/2 -translate-y-1/2 z-30 p-4 rounded-full bg-white/10 backdrop-blur-md border border-white/30 hover:bg-white/20 transition-all"
+        className="hidden md:flex absolute left-6 top-1/2 -translate-y-1/2 z-30 p-4 rounded-full bg-white/10 backdrop-blur-md border border-white/30 hover:bg-white/20 transition-all"
       >
         <ChevronLeft className="w-8 h-8" />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-6 top-1/2 -translate-y-1/2 z-30 p-4 rounded-full bg-white/10 backdrop-blur-md border border-white/30 hover:bg-white/20 transition-all"
+        className="hidden md:flex absolute right-6 top-1/2 -translate-y-1/2 z-30 p-4 rounded-full bg-white/10 backdrop-blur-md border border-white/30 hover:bg-white/20 transition-all"
       >
         <ChevronRight className="w-8 h-8" />
       </button>
 
       {/* Dots */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-4 z-30">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-30">
         {slides.map((_, i) => (
           <button
             key={i}
             onClick={() => setCurrentSlide(i)}
             className={`transition-all duration-500 ${
               i === currentSlide
-                ? "w-16 h-4 bg-yellow-400 rounded-full shadow-lg"
-                : "w-4 h-4 bg-white/50 rounded-full hover:bg-white/80"
+                ? "md:w-16 w-8 md:h-4 h-3 bg-yellow-400 rounded-full shadow-lg"
+                : "w-3 h-3 md:w-4 md:h-4 bg-white/50 rounded-full hover:bg-white/80"
             }`}
           />
         ))}
