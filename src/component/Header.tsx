@@ -18,7 +18,7 @@ interface Slide {
 const slides: Slide[] = [
   {
     title: "Vận dụng Tư tưởng Hồ Chí Minh",
-    highlight: "Hồ Chí Minh",
+    highlight: "Về độc lập dân tộc gắn liền CNXH",
     subtitle: "trong thời kỳ mới",
     badge: "Giáo trình Tư tưởng Hồ Chí Minh (2021)",
     bgImage: image1,
