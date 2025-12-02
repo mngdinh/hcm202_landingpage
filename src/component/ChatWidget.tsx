@@ -115,12 +115,16 @@ export const ChatWidget: React.FC = () => {
         setMessages(INIT_MESSAGES);
     };
 
-    // Helper to render markdown-like text (bolding and basic lists)
+    // Helper to render markdown-like text (strip headings, bolding and basic lists)
     const renderFormattedText = (text: string) => {
         return text.split('\n').map((line, i) => {
-            // Check for list items (starting with - or *)
-            const isBullet = line.trim().startsWith('- ') || line.trim().startsWith('* ');
-            const cleanLine = isBullet ? line.trim().substring(2).trim() : line;
+            // Trim the line and remove markdown heading markers like '#', '##', '### ' etc.
+            const trimmed = line.trim();
+            const withoutHeading = trimmed.replace(/^#{1,6}\s+/, '');
+
+            // Check for list items (starting with - or *) after stripping headings
+            const isBullet = withoutHeading.startsWith('- ') || withoutHeading.startsWith('* ');
+            const cleanLine = isBullet ? withoutHeading.substring(2).trim() : withoutHeading;
 
             // Split by **bold** syntax
             const parts = cleanLine.split(/(\*\*.*?\*\*)/g).map((part, j) => {
@@ -140,7 +144,7 @@ export const ChatWidget: React.FC = () => {
             }
 
             // Handle empty lines for spacing
-            if (!line.trim()) return <div key={i} className="h-2"></div>;
+            if (!trimmed) return <div key={i} className="h-2"></div>;
 
             return <div key={i} className="mb-1 last:mb-0">{parts}</div>;
         });

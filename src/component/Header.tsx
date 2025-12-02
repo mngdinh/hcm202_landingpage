@@ -1,6 +1,6 @@
 // src/components/Header.tsx
 import React, { useState, useEffect, useRef } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Sun, Moon } from "lucide-react";
 import { RevealOnScroll } from "./RevealOnScroll";
 
 // Import ảnh (đặt trong public/images hoặc src/assets)
@@ -53,6 +53,7 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ onScrollToContent }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [isDark, setIsDark] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -64,6 +65,31 @@ export const Header: React.FC<HeaderProps> = ({ onScrollToContent }) => {
     timeoutRef.current = setInterval(nextSlide, 6000);
     return () => clearInterval(timeoutRef.current!);
   }, [isPlaying, currentSlide]);
+
+  // Initialize theme from localStorage or OS preference
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem("theme");
+      if (stored) {
+        setIsDark(stored === "dark");
+      } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        setIsDark(true);
+      }
+    } catch (e) {
+      // ignore
+    }
+  }, []);
+
+  // Apply dark class and persist preference
+  useEffect(() => {
+    try {
+      if (isDark) document.documentElement.classList.add("dark");
+      else document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    } catch (e) {
+      // ignore
+    }
+  }, [isDark]);
 
   return (
     <header
@@ -155,6 +181,16 @@ export const Header: React.FC<HeaderProps> = ({ onScrollToContent }) => {
         className="hidden md:flex absolute right-6 top-1/2 -translate-y-1/2 z-30 p-4 rounded-full bg-white/10 backdrop-blur-md border border-white/30 hover:bg-white/20 transition-all"
       >
         <ChevronRight className="w-8 h-8" />
+      </button>
+
+      {/* Dark mode toggle */}
+      <button
+        onClick={() => setIsDark((s) => !s)}
+        aria-label={isDark ? "Chuyển sang chế độ sáng" : "Chuyển sang chế độ tối"}
+        className="absolute top-6 right-6 z-40 p-2 rounded-full bg-white/10 dark:bg-slate-800/40 text-white hover:bg-white/20 dark:hover:bg-slate-700/60 transition-colors"
+        title={isDark ? "Chế độ sáng" : "Chế độ tối"}
+      >
+        {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
       </button>
 
       {/* Dots */}
