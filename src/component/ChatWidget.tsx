@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { GoogleGenAI, Chat } from "@google/genai";
-import { MessageCircle, X, Send, Loader2, Sparkles, Bot } from 'lucide-react';
+import { MessageCircle, X, Send, Loader2, Sparkles, Bot, Trash2 } from 'lucide-react';
 import { CONTENT_SECTIONS } from '../data/constants';
 
 interface Message {
@@ -32,9 +32,13 @@ HƯỚNG DẪN TRẢ LỜI:
 
 export const ChatWidget: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [messages, setMessages] = useState<Message[]>([
+
+    // Initial chat messages (used to reset/clear history)
+    const INIT_MESSAGES: Message[] = [
         { id: 'init', role: 'model', text: 'Xin chào! Tôi có thể giúp gì cho bạn về nội dung bài học hôm nay?' }
-    ]);
+    ];
+
+    const [messages, setMessages] = useState<Message[]>(INIT_MESSAGES);
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [chatSession, setChatSession] = useState<Chat | null>(null);
@@ -104,6 +108,13 @@ export const ChatWidget: React.FC = () => {
         }
     };
 
+    const handleClearHistory = () => {
+        const ok = confirm('Bạn có chắc muốn xóa lịch sử chat?');
+        if (!ok) return;
+        setIsLoading(false);
+        setMessages(INIT_MESSAGES);
+    };
+
     // Helper to render markdown-like text (bolding and basic lists)
     const renderFormattedText = (text: string) => {
         return text.split('\n').map((line, i) => {
@@ -156,16 +167,28 @@ export const ChatWidget: React.FC = () => {
                 style={{ height: '500px', maxHeight: '70vh' }}
             >
                 {/* Header */}
-                <div className="bg-gradient-to-r from-red-800 to-red-900 p-4 flex items-center gap-3 text-white">
-                    <div className="p-2 bg-white/10 rounded-full">
-                        <Sparkles className="w-5 h-5 text-yellow-400" />
+                <div className="bg-gradient-to-r from-red-800 to-red-900 p-4 flex items-center gap-3 text-white justify-between">
+                    <div className="flex items-center gap-3">
+                        <div className="p-2 bg-white/10 rounded-full">
+                            <Sparkles className="w-5 h-5 text-yellow-400" />
+                        </div>
+                        <div>
+                            <h3 className="font-bold text-sm">Trợ lý ảo Tư tưởng HCM</h3>
+                            <p className="text-xs text-red-200 flex items-center gap-1">
+                                <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                                Powered by Gemini
+                            </p>
+                        </div>
                     </div>
-                    <div>
-                        <h3 className="font-bold text-sm">Trợ lý ảo Tư tưởng HCM</h3>
-                        <p className="text-xs text-red-200 flex items-center gap-1">
-                            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                            Powered by Gemini
-                        </p>
+
+                    <div className="flex items-center gap-2">
+                        <button
+                            onClick={handleClearHistory}
+                            title="Xóa lịch sử chat"
+                            className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                        >
+                            <Trash2 className="w-4 h-4 text-white" />
+                        </button>
                     </div>
                 </div>
 
