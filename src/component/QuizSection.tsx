@@ -207,30 +207,50 @@ export const QuizSection: React.FC<QuizSectionProps> = ({
                       idx !== currentQ.correctAnswer;
 
                     return (
-                      <button
-                        key={idx}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          if (!isSubmitted) onOptionSelect(currentQ.id, idx);
-                        }}
-                        disabled={isSubmitted}
-                        className={`w-full p-3 rounded-xl text-left text-base md:text-lg font-medium transition-all border-2
-                  ${
-                    isSelected
-                      ? "bg-[#8B0000] border-[#D9A441] text-white shadow-xl scale-[1.0]"
-                      : "bg-[#FFF7E6] border-[#D9A441]/50 text-[#8B0000] hover:border-[#D9A441] hover:bg-[#F3E8DC]"
-                  } ${isCorrect ? "ring-4 ring-green-500 ring-offset-2" : ""} 
-                    ${isWrong ? "ring-4 ring-red-500 ring-offset-2" : ""}`}
-                      >
-                        <span className="flex items-center justify-between gap-3">
-                          <span className="flex-1 text-left break-words">
-                            {option}
+                      <div className="w-full">
+                        <button
+                          key={idx}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (!isSubmitted) onOptionSelect(currentQ.id, idx);
+                          }}
+                          disabled={isSubmitted}
+                          className={`w-full p-3 rounded-xl box-border justify-center text-left text-base md:text-lg font-medium transition-all border-2
+      ${
+        isSelected
+          ? "bg-[#8B0000] border-[#D9A441] text-white shadow-lg"
+          : "bg-[#FFF7E6] border-[#D9A441]/50 text-[#8B0000]"
+      }
+      ${
+        isSubmitted && isCorrect
+          ? "border-green-500"
+          : isSubmitted && isWrong
+          ? "border-red-500"
+          : ""
+      }
+    `}
+                        >
+                          <span className="flex items-center justify-between gap-3">
+                            <span className="flex-1 text-left break-words">
+                              {option}
+                            </span>
+
+                            {/* Icon hiển thị khi nộp bài */}
+                            {isSubmitted && isCorrect && (
+                              <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0" />
+                            )}
+
+                            {isSubmitted && isWrong && (
+                              <XCircle className="w-6 h-6 text-red-600 flex-shrink-0" />
+                            )}
+
+                            {/* Icon tick khi chọn nhưng chưa submit */}
+                            {isSelected && !isSubmitted && (
+                              <CheckCircle className="w-6 h-6 text-white flex-shrink-0" />
+                            )}
                           </span>
-                          {isSelected && !isSubmitted && (
-                            <CheckCircle className="w-6 h-6 flex-shrink-0" />
-                          )}
-                        </span>
-                      </button>
+                        </button>
+                      </div>
                     );
                   })}
                 </div>
